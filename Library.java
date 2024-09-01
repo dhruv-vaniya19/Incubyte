@@ -30,6 +30,18 @@ public class Library {
         availability.put(isbn, false); // Mark the book as borrowed
     }
 
+    public void returnBook(String isbn) {
+        if (!books.containsKey(isbn)) {
+            throw new IllegalArgumentException("Book with this ISBN does not exist.");
+        }
+
+        if (availability.get(isbn)) {
+            throw new IllegalStateException("Book is already returned.");
+        }
+
+        availability.put(isbn, true); // Mark the book as available
+    }
+
     public Book getBook(String isbn) {
         return books.get(isbn);
     }
@@ -38,3 +50,4 @@ public class Library {
         return availability.getOrDefault(isbn, false);
     }
 }
+

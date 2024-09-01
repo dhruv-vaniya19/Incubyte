@@ -26,7 +26,4 @@ public class Book {
     public int getPublicationYear() {
         return publicationYear;
     }
-
-
-    
 }
