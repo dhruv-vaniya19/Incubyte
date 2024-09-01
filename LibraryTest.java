@@ -4,43 +4,46 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LibraryTest {
 
     @Test
-    public void testAddBook() {
+    public void testBorrowBook() {
         Library library = new Library();
         Book book = new Book("1234567890", "The Great Gatsby", "F. Scott Fitzgerald", 1925);
 
         library.addBook(book);
-        assertEquals(book, library.getBook("1234567890"), "The book should be added to the library.");
+        assertTrue(library.isBookAvailable("1234567890"), "Book should be available before borrowing.");
+
+        library.borrowBook("1234567890");
+        assertFalse(library.isBookAvailable("1234567890"), "Book should not be available after borrowing.");
     }
 
     @Test
-    public void testAddDuplicateBook() {
+    public void testBorrowUnavailableBook() {
         Library library = new Library();
-        Book book1 = new Book("1234567890", "The Great Gatsby", "F. Scott Fitzgerald", 1925);
-        Book book2 = new Book("1234567890", "To Kill a Mockingbird", "Harper Lee", 1960);
+        Book book = new Book("1234567890", "The Great Gatsby", "F. Scott Fitzgerald", 1925);
 
-        library.addBook(book1);
-        
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            library.addBook(book2);
+        library.addBook(book);
+        library.borrowBook("1234567890");
+
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
+            library.borrowBook("1234567890");
         });
 
-        String expectedMessage = "Invalid book or book with this ISBN already exists.";
+        String expectedMessage = "Book is not available for borrowing.";
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage), "Should throw an exception for duplicate ISBN.");
+        assertTrue(actualMessage.contains(expectedMessage), "Should throw an exception when borrowing an unavailable book.");
     }
 
     @Test
-    public void testAddNullBook() {
+    public void testBorrowNonExistentBook() {
         Library library = new Library();
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            library.addBook(null);
+            library.borrowBook("9876543210");
         });
 
-        String expectedMessage = "Invalid book or book with this ISBN already exists.";
+        String expectedMessage = "Book with this ISBN does not exist.";
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage), "Should throw an exception for null book.");
+        assertTrue(actualMessage.contains(expectedMessage), "Should throw an exception when borrowing a non-existent book.");
     }
 }
