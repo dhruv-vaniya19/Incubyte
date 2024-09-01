@@ -19,6 +19,7 @@ public class LibraryTest {
         Book book2 = new Book("1234567890", "To Kill a Mockingbird", "Harper Lee", 1960);
 
         library.addBook(book1);
+        
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             library.addBook(book2);
         });
