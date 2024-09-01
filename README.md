@@ -21,6 +21,7 @@ This project follows the TDD approach, where unit tests are written first, and t
 # Prerequisites :
 
 JDK 8 or higher
+
 JUnit 5 for testing
 
 
