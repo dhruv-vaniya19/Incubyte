@@ -1,22 +1,17 @@
 public class Book {
-
     private String isbn;
     private String title;
     private String author;
     private int publicationYear;
-    private boolean available;
 
-    // Constructor
     public Book(String isbn, String title, String author, int publicationYear) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
-        this.available = true; // Assume available by default
     }
 
-    // Getter methods
-    public String getId() {
+    public String getIsbn() {
         return isbn;
     }
 
@@ -30,9 +25,5 @@ public class Book {
 
     public int getPublicationYear() {
         return publicationYear;
-    }
-
-    public boolean isAvailable() {
-        return available;
     }
 }
