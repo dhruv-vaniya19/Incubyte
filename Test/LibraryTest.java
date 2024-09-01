@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 public class LibraryTest {
 
@@ -133,5 +134,26 @@ public class LibraryTest {
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage), "Should throw an exception when returning an already returned book.");
+    }
+
+    @Test
+    public void testViewAvailableBooks() {
+        Library library = new Library();
+        Book book1 = new Book("1234567890", "The Great Gatsby", "F. Scott Fitzgerald", 1925);
+        Book book2 = new Book("0987654321", "To Kill a Mockingbird", "Harper Lee", 1960);
+        Book book3 = new Book("1111111111", "1984", "George Orwell", 1949);
+
+        library.addBook(book1);
+        library.addBook(book2);
+        library.addBook(book3);
+
+        library.borrowBook("0987654321");
+
+        List<Book> availableBooks = library.viewAvailableBooks();
+
+        assertEquals(2, availableBooks.size(), "There should be 2 available books.");
+        assertTrue(availableBooks.contains(book1), "The Great Gatsby should be available.");
+        assertTrue(availableBooks.contains(book3), "1984 should be available.");
+        assertFalse(availableBooks.contains(book2), "To Kill a Mockingbird should not be available.");
     }
 }

@@ -1,5 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Library {
     private Map<String, Book> books;
@@ -42,6 +44,16 @@ public class Library {
         availability.put(isbn, true); // Mark the book as available
     }
 
+    public List<Book> viewAvailableBooks() {
+        List<Book> availableBooks = new ArrayList<>();
+        for (String isbn : availability.keySet()) {
+            if (availability.get(isbn)) {
+                availableBooks.add(books.get(isbn));
+            }
+        }
+        return availableBooks;
+    }
+
     public Book getBook(String isbn) {
         return books.get(isbn);
     }
@@ -50,4 +62,3 @@ public class Library {
         return availability.getOrDefault(isbn, false);
     }
 }
-
